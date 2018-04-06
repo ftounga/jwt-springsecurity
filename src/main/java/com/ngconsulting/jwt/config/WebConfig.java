@@ -17,4 +17,9 @@ public class WebConfig extends WebMvcConfigurerAdapter{
           .addResourceHandler("/resources/**")
           .addResourceLocations("/resources/"); 
     }
+	
+	/* @Override
+	  public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+	      converters.add(new MappingJackson2HttpMessageConverter());
+	  }*/
 }

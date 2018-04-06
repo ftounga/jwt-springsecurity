@@ -1,10 +1,21 @@
 package com.ngconsulting.jwt.model;
 
+import java.net.URL;
+
 public class Name {
 
 	private String title;
 	private String first;
 	private String last;
+	
+	public Name(){
+		
+	}
+	
+	public Name(String name){
+		this.first = name;
+	}
+	
 	public String getTitle() {
 		return title;
 	}

@@ -20,10 +20,11 @@ public class ProfileService {
 	
 	List<Profile> profiles;
 
-	private final Path PROFILES_FILE = Paths.get(this.getClass().getResource("profiles.json").toURI());
+	private  Path PROFILES_FILE;
 	
 	public ProfileService() throws IOException, URISyntaxException{
 		
+		PROFILES_FILE =Paths.get(this.getClass().getResource("profiles.json").toURI());
 		ObjectMapper objectMapper = new ObjectMapper();
 		profiles = objectMapper.readValue(PROFILES_FILE.toFile(), new TypeReference<List<Profile>>() {
 		});
