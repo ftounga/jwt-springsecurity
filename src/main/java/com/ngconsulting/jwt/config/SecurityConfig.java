@@ -10,15 +10,19 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.ngconsulting.jwt.security.CustomBasicAuthenticationEntryPoint;
+import com.ngconsulting.jwt.security.JwtFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-	  
-    @Autowired
+	@Autowired
+	private JwtFilter JwtFilter;
+    
+	@Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("bill").password("abc123").roles("ADMIN");
         auth.inMemoryAuthentication().withUser("tom").password("abc123").roles("USER");
@@ -31,9 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .authorizeRequests()
         .antMatchers("/user/**").hasRole("ADMIN")
         .antMatchers("/login").permitAll()
-        .anyRequest().authenticated()
+        .anyRequest().authenticated()        
         .and().httpBasic().realmName("jwt").authenticationEntryPoint(getBasicAuthEntryPoint())
-        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We don't need sessions to be created.
+        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//We don't need sessions to be created.
+        .and().addFilterBefore(JwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
      
     @Bean
