@@ -33,4 +33,6 @@ public class ProfileController {
 		DetailedProfile profile = ProfileService.detailed(username).orElseThrow(()-> new ProfileNotFoundExecption(username));		
 		return new ResponseEntity<DetailedProfile>(profile, HttpStatus.OK);
 	 }
+
+	
 }

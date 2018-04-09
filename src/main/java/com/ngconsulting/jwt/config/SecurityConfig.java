@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+import com.ngconsulting.jwt.security.CustomBasicAuthenticationEntryPoint;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -28,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
       http.csrf().disable()
         .authorizeRequests()
         .antMatchers("/user/**").hasRole("ADMIN")
+        .antMatchers("/login").permitAll()
         .anyRequest().authenticated()
         .and().httpBasic().realmName("jwt").authenticationEntryPoint(getBasicAuthEntryPoint())
         .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We don't need sessions to be created.

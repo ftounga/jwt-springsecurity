@@ -1,4 +1,4 @@
-package com.ngconsulting.jwt.config;
+package com.ngconsulting.jwt.security;
 
 import java.io.IOException;
 import java.io.PrintWriter;
